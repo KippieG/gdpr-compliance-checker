@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GDPR & Compliance Checker voor logistieke bedrijven — haven, transport, supply chain">
+  <title>ComplianceGuard Pro — GDPR &amp; Beveiliging Logistiek</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-900: #04091a;
+      --bg-800: #080f24;
+      --bg-700: #0d1730;
+      --bg-600: #101e3a;
+      --bg-card: #0f1d35;
+      --bg-card-hover: #142340;
+      --border: rgba(99, 155, 255, 0.10);
+      --border-hover: rgba(99, 155, 255, 0.22);
+      --text-100: #eef4ff;
+      --text-200: #c0d6f5;
+      --text-400: #7ca3cc;
+      --text-600: #3d6080;
+      --blue: #3b82f6;
+      --blue-glow: rgba(59, 130, 246, 0.35);
+      --indigo: #6366f1;
+      --green: #10b981;
+      --green-glow: rgba(16, 185, 129, 0.3);
+      --amber: #f59e0b;
+      --amber-glow: rgba(245, 158, 11, 0.3);
+      --red: #ef4444;
+      --red-glow: rgba(239, 68, 68, 0.3);
+      --slate: #475569;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-900);
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(99, 102, 241, 0.07) 0%, transparent 50%);
+      color: var(--text-100);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── HEADER ─── */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(4, 9, 26, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      height: 72px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .brand-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #e2f0ff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-tagline {
+      font-size: 0.68rem;
+      color: var(--text-400);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .header-spacer { flex: 1; }
+
+    .header-score-ring {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mini-ring-wrap {
+      position: relative;
+      width: 44px;
+      height: 44px;
+    }
+
+    .mini-ring-svg {
+      transform: rotate(-90deg);
+    }
+
+    .mini-ring-bg {
+      fill: none;
+      stroke: rgba(99,155,255,0.12);
+      stroke-width: 3.5;
+    }
+
+    .mini-ring-fill {
+      fill: none;
+      stroke: var(--green);
+      stroke-width: 3.5;
+      stroke-linecap: round;
+      stroke-dasharray: 119;
+      stroke-dashoffset: 119;
+      transition: stroke-dashoffset 1s ease, stroke 0.5s ease;
+      filter: drop-shadow(0 0 4px var(--green));
+    }
+
+    .mini-ring-pct {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: var(--text-200);
+    }
+
+    .header-score-label { font-size: 0.75rem; color: var(--text-400); }
+    .header-score-value { font-size: 1.1rem; font-weight: 700; color: var(--green); }
+
+    .header-actions {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.45rem 1rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+      font-family: inherit;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      color: #fff;
+      border-color: rgba(99,102,241,0.4);
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.45);
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.04);
+      color: var(--text-200);
+      border-color: var(--border);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: var(--border-hover);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--red);
+      border-color: rgba(239,68,68,0.2);
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.18);
+    }
+
+    /* ─── HERO DASHBOARD ─── */
+    .hero-section {
+      padding: 2.5rem 2rem 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-top {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2.5rem;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .score-ring-main {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      flex-shrink: 0;
+    }
+
+    .score-ring-main svg {
+      transform: rotate(-90deg);
+    }
+
+    .ring-bg {
+      fill: none;
+      stroke: rgba(99, 155, 255, 0.1);
+      stroke-width: 10;
+    }
+
+    .ring-fill {
+      fill: none;
+      stroke: var(--green);
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-dasharray: 502;
+      stroke-dashoffset: 502;
+      transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.5s ease;
+      filter: drop-shadow(0 0 8px var(--green-glow));
+    }
+
+    .ring-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+    }
+
+    .ring-pct {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--text-100);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .ring-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-400);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .compliance-verdict {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-top: 4px;
+    }
+
+    .verdict-excellent { background: rgba(16,185,129,0.15); color: var(--green); }
+    .verdict-good { background: rgba(59,130,246,0.15); color: #60a5fa; }
+    .verdict-attention { background: rgba(245,158,11,0.15); color: var(--amber); }
+    .verdict-critical { background: rgba(239,68,68,0.15); color: var(--red); }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.2rem 1.4rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      border-radius: 2px 2px 0 0;
+    }
+
+    .stat-card.sc-compliant::before { background: var(--green); }
+    .stat-card.sc-attention::before { background: var(--amber); }
+    .stat-card.sc-noncompliant::before { background: var(--red); }
+    .stat-card.sc-unchecked::before { background: var(--slate); }
+
+    .stat-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .stat-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .stat-card.sc-compliant .stat-value { color: var(--green); }
+    .stat-card.sc-attention .stat-value { color: var(--amber); }
+    .stat-card.sc-noncompliant .stat-value { color: var(--red); }
+    .stat-card.sc-unchecked .stat-value { color: var(--slate); }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-400);
+      font-weight: 500;
+      margin-top: 4px;
+    }
+
+    /* Category progress bars */
+    .category-progress {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem 2rem;
+    }
+
+    .cat-bar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+    }
+
+    .cat-bar-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 0.7rem;
+    }
+
+    .cat-bar-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .cat-bar-name {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-200);
+    }
+
+    .cat-bar-pct {
+      margin-left: auto;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-400);
+    }
+
+    .progress-bar-wrap {
+      height: 6px;
+      background: rgba(99,155,255,0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+
+    .progress-bar-fill::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* ─── CONTROLS BAR ─── */
+    .controls-bar {
+      position: sticky;
+      top: 72px;
+      z-index: 90;
+      background: rgba(4, 9, 26, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .controls-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      height: 60px;
+    }
+
+    .cat-tabs {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .cat-tab {
+      padding: 0.38rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-400);
+      font-family: inherit;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cat-tab:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--text-200);
+    }
+
+    .cat-tab.active {
+      background: rgba(59, 130, 246, 0.12);
+      border-color: rgba(59, 130, 246, 0.3);
+      color: #93c5fd;
+    }
+
+    .cat-tab .tab-count {
+      background: rgba(255,255,255,0.1);
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-size: 0.68rem;
+    }
+
+    .cat-tab.active .tab-count {
+      background: rgba(59,130,246,0.2);
+    }
+
+    .controls-divider { width: 1px; height: 24px; background: var(--border); flex-shrink: 0; }
+
+    .filter-select {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--text-200);
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 0.35rem 0.8rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    .filter-select:hover, .filter-select:focus {
+      border-color: var(--border-hover);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .filter-select option { background: #0d1730; }
+
+    .search-wrap { position: relative; }
+
+    .search-input {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--text-200);
+      font-family: inherit;
+      font-size: 0.8rem;
+      padding: 0.35rem 0.8rem 0.35rem 2rem;
+      border-radius: 8px;
+      width: 180px;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .search-input::placeholder { color: var(--text-600); }
+
+    .search-input:focus {
+      border-color: var(--border-hover);
+      background: rgba(255,255,255,0.07);
+      width: 220px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-600);
+      font-size: 0.8rem;
+      pointer-events: none;
+    }
+
+    .results-count {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-600);
+    }
+
+    /* ─── GRID ─── */
+    .grid-section {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 4rem;
+    }
+
+    .compliance-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1rem;
+    }
+
+    /* ─── COMPLIANCE CARD ─── */
+    .compliance-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.25s;
+      display: flex;
+      flex-direction: column;
+      animation: fadeSlideIn 0.4s ease both;
+    }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .compliance-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35), 0 0 0 1px var(--border-hover);
+    }
+
+    .card-status-bar {
+      height: 3px;
+      width: 100%;
+      transition: background 0.3s;
+    }
+
+    .card-status-bar.s-unchecked { background: var(--slate); }
+    .card-status-bar.s-compliant { background: var(--green); box-shadow: 0 0 8px var(--green-glow); }
+    .card-status-bar.s-attention { background: var(--amber); box-shadow: 0 0 8px var(--amber-glow); }
+    .card-status-bar.s-noncompliant { background: var(--red); box-shadow: 0 0 8px var(--red-glow); }
+
+    .card-inner {
+      padding: 1.15rem 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-badges {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .badge-risk-high {
+      background: rgba(239, 68, 68, 0.12);
+      color: #f87171;
+      border: 1px solid rgba(239,68,68,0.25);
+    }
+
+    .badge-risk-medium {
+      background: rgba(245, 158, 11, 0.12);
+      color: #fbbf24;
+      border: 1px solid rgba(245,158,11,0.25);
+    }
+
+    .badge-risk-low {
+      background: rgba(16, 185, 129, 0.12);
+      color: #34d399;
+      border: 1px solid rgba(16,185,129,0.25);
+    }
+
+    .badge-ref {
+      background: rgba(99, 102, 241, 0.1);
+      color: #a5b4fc;
+      border: 1px solid rgba(99,102,241,0.2);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.65rem;
+    }
+
+    .badge-cat {
+      background: rgba(59, 130, 246, 0.08);
+      color: #60a5fa;
+      border: 1px solid rgba(59,130,246,0.15);
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-100);
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+
+    .card-desc {
+      font-size: 0.8rem;
+      color: var(--text-400);
+      line-height: 1.55;
+      flex: 1;
+      margin-bottom: 0.9rem;
+    }
+
+    .card-controls {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .status-select {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--text-200);
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.45rem 0.75rem;
+      border-radius: 9px;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237ca3cc' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.6rem center;
+      padding-right: 2rem;
+    }
+
+    .status-select:hover, .status-select:focus {
+      border-color: var(--border-hover);
+      background-color: rgba(255,255,255,0.07);
+    }
+
+    .status-select option { background: #0d1730; color: var(--text-100); }
+
+    .status-select.s-compliant { border-color: rgba(16,185,129,0.35); color: var(--green); }
+    .status-select.s-attention { border-color: rgba(245,158,11,0.35); color: var(--amber); }
+    .status-select.s-noncompliant { border-color: rgba(239,68,68,0.35); color: var(--red); }
+
+    .notes-toggle {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--text-400);
+      padding: 0.45rem 0.7rem;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-family: inherit;
+      transition: all 0.2s;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .notes-toggle:hover {
+      border-color: var(--border-hover);
+      color: var(--text-200);
+    }
+
+    .notes-toggle.has-note {
+      border-color: rgba(99, 102, 241, 0.35);
+      color: #a5b4fc;
+      background: rgba(99, 102, 241, 0.08);
+    }
+
+    .notes-panel {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease;
+      border-top: 0px solid var(--border);
+    }
+
+    .notes-panel.open {
+      max-height: 140px;
+      border-top-width: 1px;
+    }
+
+    .notes-textarea {
+      width: 100%;
+      background: rgba(0,0,0,0.2);
+      border: none;
+      color: var(--text-200);
+      font-family: inherit;
+      font-size: 0.78rem;
+      line-height: 1.5;
+      padding: 0.8rem 1.25rem;
+      resize: none;
+      outline: none;
+      height: 100px;
+    }
+
+    .notes-textarea::placeholder { color: var(--text-600); }
+
+    /* ─── HIDDEN / FILTERED ─── */
+    .compliance-card.hidden {
+      display: none;
+    }
+
+    /* ─── EMPTY STATE ─── */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-600);
+    }
+
+    .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .empty-text { font-size: 0.9rem; }
+
+    /* ─── MODAL ─── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 9, 26, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-box {
+      background: var(--bg-700);
+      border: 1px solid var(--border-hover);
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 440px;
+      width: 90%;
+      transform: scale(0.94) translateY(10px);
+      transition: transform 0.25s;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+    }
+
+    .modal-overlay.open .modal-box {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-text {
+      font-size: 0.85rem;
+      color: var(--text-400);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+    }
+
+    /* ─── FOOTER ─── */
+    .app-footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .footer-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-divider { flex: 1; }
+
+    .footer-meta {
+      font-size: 0.72rem;
+      color: var(--text-600);
+      text-align: right;
+    }
+
+    /* ─── TOAST ─── */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--bg-700);
+      border: 1px solid var(--border-hover);
+      border-radius: 12px;
+      padding: 0.9rem 1.25rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-200);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      z-index: 500;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      max-width: 320px;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1100px) {
+      .hero-stats { grid-template-columns: repeat(2, 1fr); }
+      .category-progress { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .app-header { padding: 0 1rem; }
+      .brand-tagline { display: none; }
+      .hero-top { grid-template-columns: 1fr; }
+      .score-ring-main { margin: 0 auto; }
+      .hero-stats { grid-template-columns: repeat(2, 1fr); }
+      .category-progress { padding: 0 1rem 1.5rem; }
+      .controls-inner { overflow-x: auto; }
+      .cat-tabs { flex-wrap: nowrap; }
+      .grid-section { padding: 1rem 1rem 3rem; }
+      .compliance-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Print styles */
+    @media print {
+      .app-header, .controls-bar, .app-footer { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="app-header">
+  <div class="brand">
+    <div class="brand-icon">🛡️</div>
+    <div>
+      <div class="brand-name">ComplianceGuard Pro</div>
+      <div class="brand-tagline">GDPR &amp; Beveiliging — Logistiek &amp; Haven</div>
+    </div>
+  </div>
+
+  <div class="header-spacer"></div>
+
+  <div class="header-score-ring">
+    <div class="mini-ring-wrap">
+      <svg class="mini-ring-svg" width="44" height="44" viewBox="0 0 44 44">
+        <circle class="mini-ring-bg" cx="22" cy="22" r="19"/>
+        <circle class="mini-ring-fill" id="miniRingFill" cx="22" cy="22" r="19"/>
+      </svg>
+      <div class="mini-ring-pct" id="miniRingPct">0%</div>
+    </div>
+    <div>
+      <div class="header-score-label">Compliance Score</div>
+      <div class="header-score-value" id="headerScoreVal">Bezig…</div>
+    </div>
+  </div>
+
+  <div class="header-actions">
+    <button class="btn btn-ghost" onclick="showResetModal()">↺ Reset</button>
+    <button class="btn btn-primary" onclick="exportReport()">⬇ Export HTML</button>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero-section">
+  <div class="hero-top">
+    <div class="score-ring-main">
+      <svg width="180" height="180" viewBox="0 0 180 180">
+        <circle class="ring-bg" cx="90" cy="90" r="80"/>
+        <circle class="ring-fill" id="mainRingFill" cx="90" cy="90" r="80"/>
+      </svg>
+      <div class="ring-center">
+        <span class="ring-pct" id="mainRingPct">0%</span>
+        <span class="ring-label">Score</span>
+        <span class="compliance-verdict verdict-attention" id="verdictBadge">Bezig…</span>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-card sc-compliant">
+        <span class="stat-icon">✅</span>
+        <div class="stat-value" id="countCompliant">0</div>
+        <div class="stat-label">Compliant</div>
+      </div>
+      <div class="stat-card sc-attention">
+        <span class="stat-icon">⚠️</span>
+        <div class="stat-value" id="countAttention">0</div>
+        <div class="stat-label">Aandacht vereist</div>
+      </div>
+      <div class="stat-card sc-noncompliant">
+        <span class="stat-icon">❌</span>
+        <div class="stat-value" id="countNoncompliant">0</div>
+        <div class="stat-label">Niet compliant</div>
+      </div>
+      <div class="stat-card sc-unchecked">
+        <span class="stat-icon">⬜</span>
+        <div class="stat-value" id="countUnchecked">24</div>
+        <div class="stat-label">Niet getoetst</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Category progress bars -->
+<div class="category-progress" id="catProgressBars">
+  <!-- filled by JS -->
+</div>
+
+<!-- ═══ CONTROLS ═══ -->
+<div class="controls-bar">
+  <div class="controls-inner">
+    <div class="cat-tabs" id="catTabs">
+      <button class="cat-tab active" data-cat="all" onclick="setCategory('all', this)">
+        Alle items <span class="tab-count" id="tc-all">24</span>
+      </button>
+      <button class="cat-tab" data-cat="gdpr" onclick="setCategory('gdpr', this)">
+        🛡 GDPR/AVG <span class="tab-count" id="tc-gdpr">6</span>
+      </button>
+      <button class="cat-tab" data-cat="applicaties" onclick="setCategory('applicaties', this)">
+        💻 Applicatiebeheer <span class="tab-count" id="tc-applicaties">6</span>
+      </button>
+      <button class="cat-tab" data-cat="beveiliging" onclick="setCategory('beveiliging', this)">
+        🔒 Beveiliging <span class="tab-count" id="tc-beveiliging">6</span>
+      </button>
+      <button class="cat-tab" data-cat="logistiek" onclick="setCategory('logistiek', this)">
+        🚢 Logistiek/Haven <span class="tab-count" id="tc-logistiek">6</span>
+      </button>
+    </div>
+
+    <div class="controls-divider"></div>
+
+    <select class="filter-select" id="filterStatus" onchange="applyFilters()">
+      <option value="">Alle statussen</option>
+      <option value="unchecked">Niet getoetst</option>
+      <option value="compliant">Compliant</option>
+      <option value="attention">Aandacht</option>
+      <option value="noncompliant">Niet OK</option>
+    </select>
+
+    <select class="filter-select" id="filterRisk" onchange="applyFilters()">
+      <option value="">Alle risico's</option>
+      <option value="high">Hoog risico</option>
+      <option value="medium">Midden risico</option>
+      <option value="low">Laag risico</option>
+    </select>
+
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="searchInput" type="text" placeholder="Zoek checkpunt…" oninput="applyFilters()">
+    </div>
+
+    <span class="results-count" id="resultsCount">24 van 24</span>
+  </div>
+</div>
+
+<!-- ═══ GRID ═══ -->
+<div class="grid-section">
+  <div class="compliance-grid" id="complianceGrid">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="app-footer">
+  <div class="footer-actions">
+    <a href="mailto:philgodf@gmail.com?subject=GDPR Actieplan Aanvraag&body=Hallo,%0D%0A%0D%0AIk wil graag een GDPR actieplan op maat voor onze organisatie.%0D%0A%0D%0AMet vriendelijke groet," class="btn btn-primary">
+      📋 Vraag Actieplan Aan
+    </a>
+    <a href="mailto:philgodf@gmail.com?subject=GDPR Advies&body=Hallo,%0D%0A%0D%0AIk heb een vraag over GDPR compliance:" class="btn btn-ghost">
+      💬 GDPR Advies
+    </a>
+    <button class="btn btn-ghost" onclick="exportReport()">
+      📄 Download Rapport
+    </button>
+    <div class="footer-divider"></div>
+    <div class="footer-meta">
+      ComplianceGuard Pro v1.0 · Gebaseerd op AVG, CIS Controls v8, ISO 27001:2022<br>
+      Referenties: Verordening (EU) 2016/679 · SOLAS XI-2 · DWU 2016/952
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ RESET MODAL ═══ -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal-box">
+    <div class="modal-title">⚠️ Alle data resetten?</div>
+    <div class="modal-text">
+      Dit zal alle statussen, notities en instellingen verwijderen. Deze actie kan niet ongedaan worden gemaakt.
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('resetModal')">Annuleren</button>
+      <button class="btn btn-danger" onclick="confirmReset()">Ja, alles resetten</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div class="toast" id="toast">
+  <span id="toastIcon">✅</span>
+  <span id="toastMsg">Opgeslagen</span>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  DATA MODEL
+// ═══════════════════════════════════════════════
+
+const CATEGORIES = {
+  gdpr:        { name: 'GDPR / AVG',        icon: '🛡',  color: '#6366f1', glow: 'rgba(99,102,241,0.3)' },
+  applicaties: { name: 'Applicatiebeheer',  icon: '💻',  color: '#3b82f6', glow: 'rgba(59,130,246,0.3)' },
+  beveiliging: { name: 'Beveiliging',       icon: '🔒',  color: '#10b981', glow: 'rgba(16,185,129,0.3)' },
+  logistiek:   { name: 'Logistiek / Haven', icon: '🚢',  color: '#f59e0b', glow: 'rgba(245,158,11,0.3)' },
+};
+
+const ITEMS = [
+  // ── GDPR / AVG ──
+  {
+    id: 'g1', cat: 'gdpr', risk: 'high',
+    title: 'Verwerkingsregister (Art. 30)',
+    ref: 'Art. 30 AVG',
+    desc: 'Gedetailleerd register van alle verwerkingsactiviteiten bijgehouden, up-to-date en beschikbaar voor de toezichthouder (AP).',
+  },
+  {
+    id: 'g2', cat: 'gdpr', risk: 'high',
+    title: 'Rechtsgrond Verwerking (Art. 6)',
+    ref: 'Art. 6 AVG',
+    desc: 'Per verwerking is een geldige rechtsgrond vastgesteld: toestemming, overeenkomst, wettelijke verplichting, vitaal belang, publieke taak of gerechtvaardigd belang.',
+  },
+  {
+    id: 'g3', cat: 'gdpr', risk: 'high',
+    title: 'Privacyverklaring (Art. 13–14)',
+    ref: 'Art. 13–14 AVG',
+    desc: 'Heldere, actuele privacyverklaring gepubliceerd op de website. Bevat contactgegevens FG, doeleinden, bewaartermijnen en rechten van betrokkenen.',
+  },
+  {
+    id: 'g4', cat: 'gdpr', risk: 'high',
+    title: 'DPIA Hoog-risico Verwerkingen (Art. 35)',
+    ref: 'Art. 35 AVG',
+    desc: 'Data Protection Impact Assessment (DPIA) uitgevoerd voor verwerkingen met hoog risico — bijv. tracking van chauffeurs, cameratoezicht in haven, profilering.',
+  },
+  {
+    id: 'g5', cat: 'gdpr', risk: 'medium',
+    title: 'Bewaartermijnen & Verwijdering (Art. 5)',
+    ref: 'Art. 5 lid 1 e AVG',
+    desc: 'Bewaartermijnen vastgesteld per datategorie en technisch geïmplementeerd. Persoonsgegevens worden automatisch verwijderd of geanonimiseerd na afloop.',
+  },
+  {
+    id: 'g6', cat: 'gdpr', risk: 'high',
+    title: 'Functionaris Gegevensbescherming (Art. 37)',
+    ref: 'Art. 37–39 AVG',
+    desc: 'FG aangesteld indien verplicht (overheidsinstanties, grootschalige verwerking bijzondere categorieën). Contactgegevens gemeld bij AP. Onafhankelijke positie geborgd.',
+  },
+
+  // ── APPLICATIEBEHEER ──
+  {
+    id: 'a1', cat: 'applicaties', risk: 'high',
+    title: 'Patchmanagement & Updates',
+    ref: 'CIS Control 7',
+    desc: 'Gestructureerd patchmanagement proces actief. Kritieke patches worden binnen 72 uur geïmplementeerd. Patchstatus wordt gemonitord via een CMDB of patchbeheertool.',
+  },
+  {
+    id: 'a2', cat: 'applicaties', risk: 'high',
+    title: 'Toegangsbeheer & IAM (Least Privilege)',
+    ref: 'ISO 27001 A.9',
+    desc: 'Identiteits- en toegangsbeheer ingericht volgens least privilege principe. Rolgebaseerde toegang (RBAC). Periodieke toegangsreviews uitgevoerd (minimaal jaarlijks).',
+  },
+  {
+    id: 'a3', cat: 'applicaties', risk: 'medium',
+    title: 'Software Asset Management',
+    ref: 'ISO 27001 A.8.1 / CIS Control 2',
+    desc: 'Actuele inventaris van alle gebruikte software en licenties. Geen ongeautoriseerde of verlopen software in productieomgevingen. Schaduw-IT beleid gedefinieerd.',
+  },
+  {
+    id: 'a4', cat: 'applicaties', risk: 'medium',
+    title: 'Change Management Procedure',
+    ref: 'ISO 27001 A.12.1.2',
+    desc: 'Geformaliseerd wijzigingenbeheerproces aanwezig. Wijzigingen worden goedgekeurd, getest en gedocumenteerd. Emergency change procedure beschikbaar.',
+  },
+  {
+    id: 'a5', cat: 'applicaties', risk: 'high',
+    title: 'Business Continuity & Disaster Recovery',
+    ref: 'ISO 27001 A.17 / BIO',
+    desc: 'BCP en DR-plan gedocumenteerd, getest en actueel. RTO/RPO zijn vastgesteld per kritiek systeem (TOS, ERP, EDI). Backupstrategie voldoet aan 3-2-1 principe.',
+  },
+  {
+    id: 'a6', cat: 'applicaties', risk: 'high',
+    title: 'Incident Response Procedure',
+    ref: 'ISO 27001 A.16 / Art. 33 AVG',
+    desc: 'Incident response plan gedocumenteerd en geoefend. Datalekken worden binnen 72 uur gemeld aan AP (Art. 33 AVG). CSIRT/CISO rol duidelijk belegd.',
+  },
+
+  // ── BEVEILIGING ──
+  {
+    id: 'b1', cat: 'beveiliging', risk: 'high',
+    title: 'Multi-factor Authenticatie (MFA)',
+    ref: 'CIS Control 6.3 / NIS2',
+    desc: 'MFA verplicht voor alle externe toegang (VPN, cloud, remote desktop), beheerdersaccounts en applicaties met persoonsgegevens. TOTP of hardwaresleutel aanbevolen.',
+  },
+  {
+    id: 'b2', cat: 'beveiliging', risk: 'high',
+    title: 'Encryptie Data at Rest',
+    ref: 'ISO 27001 A.10.1',
+    desc: 'Alle opgeslagen persoonsgegevens en vertrouwelijke bedrijfsdata versleuteld (AES-256 of equivalent). Encryptie geldt voor servers, laptops, USB-media en backups.',
+  },
+  {
+    id: 'b3', cat: 'beveiliging', risk: 'high',
+    title: 'Encryptie Data in Transit',
+    ref: 'CIS Control 14.4 / ISO 27001 A.13',
+    desc: 'Alle dataoverdrachten beveiligd met TLS 1.2+ of hoger. Verouderde protocollen (SSL, TLS 1.0/1.1) zijn uitgeschakeld. Certificaten worden gecontroleerd en tijdig verlengd.',
+  },
+  {
+    id: 'b4', cat: 'beveiliging', risk: 'medium',
+    title: 'Vulnerability Scanning & Pentest',
+    ref: 'CIS Control 7.1 / ISO 27001 A.12.6',
+    desc: 'Automatische vulnerability scans worden minimaal maandelijks uitgevoerd. Kritieke kwetsbaarheden (CVSS ≥ 9.0) worden binnen 24u geadresseerd. Jaarlijkse pentest.',
+  },
+  {
+    id: 'b5', cat: 'beveiliging', risk: 'high',
+    title: 'Firewall & Netwerksegmentatie',
+    ref: 'CIS Control 12 / ISO 27001 A.13',
+    desc: 'Netwerk gesegmenteerd in zones (OT/IT, kantoor/productie). Next-gen firewall ingericht met allowlist-policy. Havensystemen (TOS, SCADA) in apart beveiligd netwerksegment.',
+  },
+  {
+    id: 'b6', cat: 'beveiliging', risk: 'medium',
+    title: 'Security Awareness Training',
+    ref: 'CIS Control 17 / ISO 27001 A.7.2.2',
+    desc: 'Alle medewerkers volgen jaarlijks een security awareness training. Phishingsimulaties worden uitgevoerd. Specifieke training voor IT-beheerders en systeembeheerders.',
+  },
+
+  // ── LOGISTIEK / HAVEN ──
+  {
+    id: 'l1', cat: 'logistiek', risk: 'high',
+    title: 'AEO-certificering & Documentatie',
+    ref: 'DWU Art. 38–41 / Vo. 2015/2446',
+    desc: 'Authorized Economic Operator (AEO) certificaat actueel. Veiligheidsprocedures, toegangscontroles en IT-beveiligingseisen gedocumenteerd conform douanevereisten.',
+  },
+  {
+    id: 'l2', cat: 'logistiek', risk: 'high',
+    title: 'EDI-verbindingen Beveiligd',
+    ref: 'ISO 27001 A.13.1 / NEN 7510',
+    desc: 'Alle EDI-koppelingen (Portbase, customs, rederijen) beveiligd via AS2, SFTP of API met mTLS. Berichten worden gevalideerd, gelogd en gemonitord op afwijkingen.',
+  },
+  {
+    id: 'l3', cat: 'logistiek', risk: 'high',
+    title: 'TOS Toegangsbeheer & Logging',
+    ref: 'ISO 27001 A.9.2 / CIS Control 8',
+    desc: 'Terminal Operating System heeft rolgebaseerd toegangsbeheer. Alle acties in het TOS worden gelogd en bewaard (minimaal 1 jaar). Ongeautoriseerde toegang genereert een alert.',
+  },
+  {
+    id: 'l4', cat: 'logistiek', risk: 'medium',
+    title: 'GPS/Tracking Data GDPR-conform',
+    ref: 'Art. 6 AVG / WP29 Richtlijnen',
+    desc: 'Tracking van voertuigen en chauffeurs gebaseerd op geldige rechtsgrond. Medewerkers geïnformeerd. Locatiedata wordt niet langer bewaard dan noodzakelijk voor operationeel doel.',
+  },
+  {
+    id: 'l5', cat: 'logistiek', risk: 'high',
+    title: 'Verwerkersovereenkomsten Carriers',
+    ref: 'Art. 28 AVG',
+    desc: 'Met alle externe vervoerders, agenten en portaalbeheerders die persoonsgegevens verwerken is een verwerkersovereenkomst (DPA) getekend conform Art. 28 AVG-vereisten.',
+  },
+  {
+    id: 'l6', cat: 'logistiek', risk: 'medium',
+    title: 'ISPS Code & Havenbeveiliging',
+    ref: 'SOLAS XI-2 / ISPS Code 2004',
+    desc: 'Haventerminal voldoet aan ISPS-beveiligingsplan. Ship Security Plan (SSP) en Port Facility Security Plan (PFSP) actueel. Beveiligingsoefeningen minimaal jaarlijks uitgevoerd.',
+  },
+];
+
+// ═══════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════
+
+let state = {};
+let currentCat = 'all';
+let toastTimer = null;
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem('cg_state');
+    if (saved) state = JSON.parse(saved);
+  } catch(e) {}
+  ITEMS.forEach(item => {
+    if (!state[item.id]) state[item.id] = { status: 'unchecked', notes: '' };
+  });
+}
+
+function saveState() {
+  try {
+    localStorage.setItem('cg_state', JSON.stringify(state));
+  } catch(e) {}
+}
+
+// ═══════════════════════════════════════════════
+//  SCORING
+// ═══════════════════════════════════════════════
+
+function calcScore() {
+  let compliant = 0, attention = 0, noncompliant = 0, unchecked = 0;
+  ITEMS.forEach(item => {
+    const s = state[item.id]?.status || 'unchecked';
+    if (s === 'compliant') compliant++;
+    else if (s === 'attention') attention++;
+    else if (s === 'noncompliant') noncompliant++;
+    else unchecked++;
+  });
+  const checked = compliant + attention + noncompliant;
+  const score = checked === 0 ? 0 : Math.round(((compliant + attention * 0.5) / ITEMS.length) * 100);
+  return { compliant, attention, noncompliant, unchecked, score, checked };
+}
+
+function catScore(catId) {
+  const items = ITEMS.filter(i => i.cat === catId);
+  let points = 0;
+  items.forEach(item => {
+    const s = state[item.id]?.status || 'unchecked';
+    if (s === 'compliant') points += 1;
+    else if (s === 'attention') points += 0.5;
+  });
+  return Math.round((points / items.length) * 100);
+}
+
+// ═══════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════
+
+function renderAll() {
+  renderCatProgressBars();
+  renderGrid();
+  updateDashboard();
+}
+
+function renderCatProgressBars() {
+  const container = document.getElementById('catProgressBars');
+  container.innerHTML = Object.entries(CATEGORIES).map(([id, cat]) => {
+    const pct = catScore(id);
+    const col = pct >= 75 ? '#10b981' : pct >= 50 ? '#f59e0b' : '#ef4444';
+    return `
+      <div class="cat-bar-card">
+        <div class="cat-bar-header">
+          <div class="cat-bar-icon" style="background:${cat.color}20">${cat.icon}</div>
+          <span class="cat-bar-name">${cat.name}</span>
+          <span class="cat-bar-pct" style="color:${col}">${pct}%</span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" style="width:${pct}%;background:${col};box-shadow:0 0 8px ${cat.glow}"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderGrid() {
+  const grid = document.getElementById('complianceGrid');
+  grid.innerHTML = ITEMS.map((item, idx) => {
+    const s = state[item.id] || { status: 'unchecked', notes: '' };
+    const cat = CATEGORIES[item.cat];
+    const riskMap = {
+      high:   { cls: 'badge-risk-high',   label: '▲ Hoog Risico' },
+      medium: { cls: 'badge-risk-medium', label: '◆ Middel Risico' },
+      low:    { cls: 'badge-risk-low',    label: '▼ Laag Risico' },
+    };
+    const risk = riskMap[item.risk];
+    const statusOpts = [
+      { v: 'unchecked',    l: '⬜ Niet getoetst' },
+      { v: 'compliant',    l: '✅ Compliant' },
+      { v: 'attention',    l: '⚠️ Aandacht vereist' },
+      { v: 'noncompliant', l: '❌ Niet compliant' },
+    ];
+    const hasNote = s.notes && s.notes.trim().length > 0;
+
+    return `
+      <div class="compliance-card" data-id="${item.id}" data-cat="${item.cat}" data-status="${s.status}" data-risk="${item.risk}" data-title="${item.title.toLowerCase()}" style="animation-delay:${idx * 0.03}s">
+        <div class="card-status-bar s-${s.status}"></div>
+        <div class="card-inner">
+          <div class="card-badges">
+            <span class="badge ${risk.cls}">${risk.label}</span>
+            <span class="badge badge-ref">${item.ref}</span>
+            <span class="badge badge-cat">${cat.icon} ${cat.name}</span>
+          </div>
+          <div class="card-title">${item.title}</div>
+          <div class="card-desc">${item.desc}</div>
+          <div class="card-controls">
+            <select class="status-select s-${s.status}" onchange="setStatus('${item.id}', this.value, this)">
+              ${statusOpts.map(o => `<option value="${o.v}"${s.status === o.v ? ' selected' : ''}>${o.l}</option>`).join('')}
+            </select>
+            <button class="notes-toggle ${hasNote ? 'has-note' : ''}" onclick="toggleNotes('${item.id}', this)">
+              📝 ${hasNote ? 'Notitie ●' : 'Notitie'}
+            </button>
+          </div>
+        </div>
+        <div class="notes-panel" id="notes-panel-${item.id}">
+          <textarea class="notes-textarea" placeholder="Voeg bevindingen, actiepunten of verantwoordelijken toe…" oninput="setNote('${item.id}', this.value)">${s.notes || ''}</textarea>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function updateDashboard() {
+  const { compliant, attention, noncompliant, unchecked, score } = calcScore();
+
+  document.getElementById('countCompliant').textContent = compliant;
+  document.getElementById('countAttention').textContent = attention;
+  document.getElementById('countNoncompliant').textContent = noncompliant;
+  document.getElementById('countUnchecked').textContent = unchecked;
+
+  // Main ring
+  const mainFill = document.getElementById('mainRingFill');
+  const circumference = 2 * Math.PI * 80;
+  const offset = circumference - (score / 100) * circumference;
+  mainFill.style.strokeDashoffset = offset;
+
+  const scoreColor = score >= 80 ? '#10b981' : score >= 60 ? '#3b82f6' : score >= 40 ? '#f59e0b' : '#ef4444';
+  mainFill.style.stroke = scoreColor;
+  mainFill.style.filter = `drop-shadow(0 0 8px ${scoreColor}80)`;
+
+  document.getElementById('mainRingPct').textContent = score + '%';
+
+  const verdict = document.getElementById('verdictBadge');
+  if (score >= 80) {
+    verdict.textContent = '✓ Uitstekend';
+    verdict.className = 'compliance-verdict verdict-excellent';
+  } else if (score >= 60) {
+    verdict.textContent = '↑ Goed';
+    verdict.className = 'compliance-verdict verdict-good';
+  } else if (score >= 30) {
+    verdict.textContent = '⚠ Aandacht';
+    verdict.className = 'compliance-verdict verdict-attention';
+  } else {
+    verdict.textContent = '✗ Kritisch';
+    verdict.className = 'compliance-verdict verdict-critical';
+  }
+
+  // Mini ring
+  const miniFill = document.getElementById('miniRingFill');
+  const miniCirc = 2 * Math.PI * 19;
+  miniFill.style.strokeDashoffset = miniCirc - (score / 100) * miniCirc;
+  miniFill.style.stroke = scoreColor;
+  document.getElementById('miniRingPct').textContent = score + '%';
+  const hv = document.getElementById('headerScoreVal');
+  hv.textContent = score + '% compliant';
+  hv.style.color = scoreColor;
+
+  // Category bars
+  renderCatProgressBars();
+}
+
+// ═══════════════════════════════════════════════
+//  INTERACTIONS
+// ═══════════════════════════════════════════════
+
+function setStatus(id, value, selectEl) {
+  state[id].status = value;
+  saveState();
+
+  // Update card visually
+  const card = selectEl.closest('.compliance-card');
+  card.dataset.status = value;
+  card.querySelector('.card-status-bar').className = 'card-status-bar s-' + value;
+  selectEl.className = 'status-select s-' + value;
+
+  updateDashboard();
+  applyFilters();
+  showToast(value === 'compliant' ? '✅' : value === 'attention' ? '⚠️' : value === 'noncompliant' ? '❌' : '⬜',
+            'Status opgeslagen');
+}
+
+function setNote(id, value) {
+  state[id].notes = value;
+  saveState();
+  // Update toggle button
+  const card = document.querySelector(`[data-id="${id}"]`);
+  if (!card) return;
+  const btn = card.querySelector('.notes-toggle');
+  const hasNote = value.trim().length > 0;
+  btn.classList.toggle('has-note', hasNote);
+  btn.innerHTML = `📝 ${hasNote ? 'Notitie ●' : 'Notitie'}`;
+}
+
+function toggleNotes(id, btn) {
+  const panel = document.getElementById('notes-panel-' + id);
+  const isOpen = panel.classList.contains('open');
+  panel.classList.toggle('open', !isOpen);
+  if (!isOpen) panel.querySelector('textarea').focus();
+}
+
+function setCategory(cat, el) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  applyFilters();
+}
+
+function applyFilters() {
+  const statusFilter = document.getElementById('filterStatus').value;
+  const riskFilter   = document.getElementById('filterRisk').value;
+  const search       = document.getElementById('searchInput').value.toLowerCase().trim();
+
+  let visible = 0;
+  document.querySelectorAll('.compliance-card').forEach(card => {
+    const matchCat    = currentCat === 'all' || card.dataset.cat === currentCat;
+    const matchStatus = !statusFilter || card.dataset.status === statusFilter;
+    const matchRisk   = !riskFilter   || card.dataset.risk   === riskFilter;
+    const matchSearch = !search       || card.dataset.title.includes(search)
+                        || card.querySelector('.card-desc').textContent.toLowerCase().includes(search)
+                        || card.querySelector('.badge-ref').textContent.toLowerCase().includes(search);
+
+    const show = matchCat && matchStatus && matchRisk && matchSearch;
+    card.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+
+  document.getElementById('resultsCount').textContent = `${visible} van 24`;
+
+  // Empty state
+  const grid = document.getElementById('complianceGrid');
+  const existing = grid.querySelector('.empty-state');
+  if (existing) existing.remove();
+  if (visible === 0) {
+    grid.insertAdjacentHTML('beforeend', `
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <div class="empty-text">Geen checkpunten gevonden voor de huidige filters.</div>
+      </div>
+    `);
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  RESET
+// ═══════════════════════════════════════════════
+
+function showResetModal() {
+  document.getElementById('resetModal').classList.add('open');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+function confirmReset() {
+  ITEMS.forEach(item => { state[item.id] = { status: 'unchecked', notes: '' }; });
+  saveState();
+  closeModal('resetModal');
+  renderAll();
+  showToast('♻️', 'Alle data gereset');
+}
+
+document.getElementById('resetModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal('resetModal');
+});
+
+// ═══════════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════════
+
+function showToast(icon, msg) {
+  if (toastTimer) clearTimeout(toastTimer);
+  document.getElementById('toastIcon').textContent = icon;
+  document.getElementById('toastMsg').textContent = msg;
+  document.getElementById('toast').classList.add('show');
+  toastTimer = setTimeout(() => {
+    document.getElementById('toast').classList.remove('show');
+  }, 2500);
+}
+
+// ═══════════════════════════════════════════════
+//  EXPORT RAPPORT
+// ═══════════════════════════════════════════════
+
+function exportReport() {
+  const { compliant, attention, noncompliant, unchecked, score } = calcScore();
+  const now = new Date().toLocaleDateString('nl-NL', { year: 'numeric', month: 'long', day: 'numeric' });
+
+  const statusIcon = { compliant: '✅', attention: '⚠️', noncompliant: '❌', unchecked: '⬜' };
+  const statusLabel = { compliant: 'Compliant', attention: 'Aandacht vereist', noncompliant: 'Niet compliant', unchecked: 'Niet getoetst' };
+  const riskLabel = { high: '▲ Hoog', medium: '◆ Middel', low: '▼ Laag' };
+
+  const verdictColor = score >= 80 ? '#10b981' : score >= 60 ? '#3b82f6' : score >= 40 ? '#f59e0b' : '#ef4444';
+  const verdictText  = score >= 80 ? 'Uitstekend' : score >= 60 ? 'Goed' : score >= 40 ? 'Aandacht vereist' : 'Kritisch';
+
+  const rows = ITEMS.map(item => {
+    const s = state[item.id] || { status: 'unchecked', notes: '' };
+    const statusBg = { compliant: '#d1fae5', attention: '#fef3c7', noncompliant: '#fee2e2', unchecked: '#f1f5f9' }[s.status];
+    const statusFg = { compliant: '#065f46', attention: '#92400e', noncompliant: '#991b1b', unchecked: '#475569' }[s.status];
+    return `
+      <tr>
+        <td style="font-weight:600;color:#1e293b">${item.title}</td>
+        <td><span style="background:#ede9fe;color:#5b21b6;padding:2px 8px;border-radius:12px;font-size:12px;font-family:monospace">${item.ref}</span></td>
+        <td>${CATEGORIES[item.cat].icon} ${CATEGORIES[item.cat].name}</td>
+        <td style="color:${s.status==='noncompliant'?'#ef4444':s.status==='attention'?'#d97706':'#6b7280'}">${riskLabel[item.risk]}</td>
+        <td><span style="background:${statusBg};color:${statusFg};padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">${statusIcon[s.status]} ${statusLabel[s.status]}</span></td>
+        <td style="color:#64748b;font-size:13px">${s.notes ? s.notes.replace(/\n/g,'<br>') : '<em style="color:#cbd5e1">—</em>'}</td>
+      </tr>
+    `;
+  }).join('');
+
+  const catBlocks = Object.entries(CATEGORIES).map(([id, cat]) => {
+    const pct = catScore(id);
+    const col = pct >= 75 ? '#10b981' : pct >= 50 ? '#d97706' : '#ef4444';
+    return `
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:16px 20px;display:inline-block;min-width:180px;margin:6px">
+        <div style="font-size:22px;margin-bottom:6px">${cat.icon}</div>
+        <div style="font-weight:700;color:#1e293b;font-size:14px;margin-bottom:8px">${cat.name}</div>
+        <div style="font-size:28px;font-weight:900;color:${col}">${pct}%</div>
+        <div style="height:6px;background:#e2e8f0;border-radius:3px;margin-top:8px">
+          <div style="height:100%;width:${pct}%;background:${col};border-radius:3px"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const html = `<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>ComplianceGuard Rapport — ${now}</title>
+  <style>
+    body { font-family: -apple-system, 'Inter', sans-serif; margin: 0; padding: 40px; background: #fff; color: #334155; }
+    .report-header { background: linear-gradient(135deg,#0f172a,#1e293b); color: white; padding: 36px 40px; border-radius: 20px; margin-bottom: 32px; }
+    .report-title { font-size: 26px; font-weight: 900; margin: 0 0 4px; }
+    .report-sub { font-size: 14px; opacity: 0.7; }
+    .score-big { font-size: 64px; font-weight: 900; color: ${verdictColor}; }
+    .score-label { font-size: 16px; font-weight: 600; color: ${verdictColor}; }
+    .stats-row { display: flex; gap: 16px; margin: 24px 0; flex-wrap: wrap; }
+    .stat-box { text-align: center; padding: 16px 24px; border-radius: 12px; }
+    h2 { font-size: 18px; color: #1e293b; margin: 32px 0 12px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { background: #f1f5f9; text-align: left; padding: 10px 14px; color: #64748b; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+    td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+    tr:hover td { background: #f8fafc; }
+    .footer { text-align: center; margin-top: 40px; color: #94a3b8; font-size: 12px; }
+    @media print { body { padding: 20px; } }
+  </style>
+</head>
+<body>
+  <div class="report-header">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:20px">
+      <div>
+        <div style="font-size:32px;margin-bottom:8px">🛡️</div>
+        <div class="report-title">ComplianceGuard Pro</div>
+        <div class="report-sub">GDPR &amp; Compliance Rapport — Logistiek &amp; Haven</div>
+        <div class="report-sub" style="margin-top:4px">Gegenereerd op ${now}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="score-big">${score}%</div>
+        <div class="score-label">${verdictText}</div>
+      </div>
+    </div>
+    <div class="stats-row" style="margin-top:24px;margin-bottom:0">
+      <div class="stat-box" style="background:rgba(16,185,129,0.15)"><div style="font-size:28px;font-weight:900;color:#10b981">${compliant}</div><div style="font-size:12px;color:#d1fae5">Compliant</div></div>
+      <div class="stat-box" style="background:rgba(245,158,11,0.15)"><div style="font-size:28px;font-weight:900;color:#f59e0b">${attention}</div><div style="font-size:12px;color:#fde68a">Aandacht</div></div>
+      <div class="stat-box" style="background:rgba(239,68,68,0.15)"><div style="font-size:28px;font-weight:900;color:#ef4444">${noncompliant}</div><div style="font-size:12px;color:#fecaca">Niet OK</div></div>
+      <div class="stat-box" style="background:rgba(148,163,184,0.15)"><div style="font-size:28px;font-weight:900;color:#94a3b8">${unchecked}</div><div style="font-size:12px;color:#e2e8f0">Niet getoetst</div></div>
+    </div>
+  </div>
+
+  <h2>Resultaten per categorie</h2>
+  <div style="display:flex;flex-wrap:wrap;gap:8px">${catBlocks}</div>
+
+  <h2>Gedetailleerde bevindingen</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Checkpunt</th>
+        <th>Referentie</th>
+        <th>Categorie</th>
+        <th>Risico</th>
+        <th>Status</th>
+        <th>Notities / Bevindingen</th>
+      </tr>
+    </thead>
+    <tbody>${rows}</tbody>
+  </table>
+
+  <div class="footer">
+    <p>ComplianceGuard Pro v1.0 · Gebaseerd op AVG (Vo. 2016/679), CIS Controls v8, ISO 27001:2022, SOLAS XI-2/ISPS Code, DWU Vo. 2016/952</p>
+    <p style="margin-top:4px">Dit rapport is indicatief. Raadpleeg een juridisch of compliance adviseur voor definitieve beoordeling.</p>
+  </div>
+</body>
+</html>`;
+
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `compliance-rapport-${new Date().toISOString().slice(0,10)}.html`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('📄', 'Rapport gedownload!');
+}
+
+// ═══════════════════════════════════════════════
+//  BOOT
+// ═══════════════════════════════════════════════
+
+loadState();
+renderAll();
+
+// Trigger ring animations after DOM paint
+requestAnimationFrame(() => {
+  setTimeout(updateDashboard, 50);
+});
+</script>
+</body>
+</html>
